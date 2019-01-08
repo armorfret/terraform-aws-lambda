@@ -12,6 +12,15 @@ resource "aws_lambda_function" "lambda" {
   }
 }
 
+resource "aws_lambda_permission" "allow_source" {
+  function_name = "${aws_lambda_function.lambda.function_name}"
+  statement_id  = "AllowExecutionFrom${title(var.source-type[count.index])}"
+  action        = "lambda:InvokeFunction"
+  principal     = "${var.source-type[count.index]}.amazonaws.com"
+  source_arn    = "${var.source-arn[count.index]}"
+  count         = "${length(var.source-arn)}"
+}
+
 resource "aws_iam_role_policy" "lambda_perms" {
   name   = "lambda_perms"
   role   = "${aws_iam_role.lambda.name}"

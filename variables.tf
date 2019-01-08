@@ -37,3 +37,12 @@ variable "access-policy-document" {
 variable "trust-policy-document" {
   type = "string"
 }
+
+variable "source-type" {
+  type    = "list"
+  default = ["apigateway"]
+}
+
+variable "source-arn" {
+  type = "list"
+}
