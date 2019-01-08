@@ -38,11 +38,11 @@ variable "trust-policy-document" {
   type = "string"
 }
 
-variable "source-type" {
+variable "source-types" {
   type    = "list"
   default = ["apigateway"]
 }
 
-variable "source-arn" {
+variable "source-arns" {
   type = "list"
 }
