@@ -18,7 +18,7 @@ resource "aws_lambda_permission" "allow_source" {
   action        = "lambda:InvokeFunction"
   principal     = "${var.source-types[count.index]}.amazonaws.com"
   source_arn    = "${var.source-arns[count.index]}"
-  count         = "${length(var.source-arns)}"
+  count         = "${length(var.source-types)}"
 }
 
 resource "aws_iam_role_policy" "lambda_perms" {
