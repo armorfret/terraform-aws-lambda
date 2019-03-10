@@ -1,48 +1,60 @@
 variable "runtime" {
-  type    = "string"
-  default = "go1.x"
+  description = "Language to use for Lambda"
+  type        = "string"
+  default     = "go1.x"
 }
 
 variable "handler" {
-  type    = "string"
-  default = "main"
+  description = "Program entrypoint for Lambda"
+  type        = "string"
+  default     = "main"
 }
 
 variable "timeout" {
-  type    = "string"
-  default = "50"
+  description = "Timeout after which Lamdba will terminate"
+  type        = "string"
+  default     = "10"
 }
 
-variable "lambda-bucket" {
-  type = "string"
+variable "source_bucket" {
+  description = "Bucket to use for loading Lambda source ZIP"
+  type        = "string"
 }
 
-variable "lambda-version" {
-  type = "string"
+variable "source_prefix" {
+  description = "S3 prefix to use for loading Lambda ZIP"
+  type        = "string"
+  default     = ""
 }
 
-variable "function-name" {
-  type = "string"
+variable "source_version" {
+  description = "Version of Lambda ZIP to use"
+  type        = "string"
 }
 
-variable "environment-variables" {
-  type    = "map"
-  default = {}
+variable "function_name" {
+  description = "Name for Lambda function"
+  type        = "string"
 }
 
-variable "access-policy-document" {
-  type = "string"
+variable "environment_variables" {
+  description = "Variables to provide for Lambda environment"
+  type        = "map"
+  default     = {}
 }
 
-variable "trust-policy-document" {
-  type = "string"
+variable "access_policy_document" {
+  description = "IAM policy provided to Lambda role"
+  type        = "string"
 }
 
-variable "source-types" {
-  type    = "list"
-  default = ["apigateway"]
+variable "source_types" {
+  description = "Source types which are allowed to invoke the Lambda. Must align with entries in source_arns variable"
+  type        = "list"
+  default     = ["apigateway"]
 }
 
-variable "source-arns" {
-  type = "list"
+variable "source_arns" {
+  description = "Source ARNs which are allowed to invoke the Lambda. Must align with entries in source_types variable"
+  type        = "list"
 }
