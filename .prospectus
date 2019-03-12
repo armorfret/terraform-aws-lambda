@@ -3,7 +3,7 @@ Prospectus.extra_dep('file', 'prospectus_travis')
 item do
   noop
 
-  extend ProspectusTravis::Build.new('akerl/terraform-aws-lambda')
+  extend ProspectusTravis::Build.new('armorfret/terraform-aws-lambda')
 
   deps do
     item do
