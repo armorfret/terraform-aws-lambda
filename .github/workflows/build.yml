@@ -1,0 +1,39 @@
+name: Build
+on:
+  pull_request:
+  push:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    env:
+      TERRAFORM_VERSION: 1.2.7
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Download Terraform
+      run: ./scripts/download_terraform.sh $TERRAFORM_VERSION
+    - name: Check format
+      run: ~/tfbin/terraform fmt -write=false -diff=true -check
+    - name: Post to a Slack channel
+      if: ${{ failure() }}
+      uses: slackapi/slack-github-action@v1.18.0
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      with:
+        payload: |
+          {
+            "text": "*${{ github.repository }}*\nBuild failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*${{ github.repository }}*\nBuild failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                }
+              }
+            ]
+          }
