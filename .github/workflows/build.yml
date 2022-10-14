@@ -19,7 +19,7 @@ jobs:
       run: ~/tfbin/terraform fmt -write=false -diff=true -check
     - name: Post to a Slack channel
       if: ${{ failure() }}
-      uses: slackapi/slack-github-action@v1.18.0
+      uses: slackapi/slack-github-action@v1.23.0
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
