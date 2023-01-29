@@ -35,6 +35,10 @@ resource "aws_lambda_function" "this" {
   environment {
     variables = var.environment_variables
   }
+
+  tracing_config {
+    mode = "Active"
+  }
 }
 
 resource "aws_lambda_permission" "allow_source" {
