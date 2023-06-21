@@ -17,23 +17,9 @@ jobs:
       run: ./scripts/download_terraform.sh $TERRAFORM_VERSION
     - name: Check format
       run: ~/tfbin/terraform fmt -write=false -diff=true -check
-    - name: Post to a Slack channel
-      if: ${{ failure() }}
-      uses: slackapi/slack-github-action@v1.23.0
+    - name: Post to hook-exporter
+      run: ./.github/exporter.sh
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-      with:
-        payload: |
-          {
-            "text": "*${{ github.repository }}*\nBuild failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*${{ github.repository }}*\nBuild failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                }
-              }
-            ]
-          }
+        EXPORTER_TOKEN: ${{ secrets.EXPORTER_TOKEN }}
+        JOB_STATUS: ${{ job.status }}
+      if: ${{ always() }}
