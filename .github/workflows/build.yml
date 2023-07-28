@@ -18,10 +18,16 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: recursive
+    - name: Set up go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '>=1.19.0'
     - name: Download Terraform
       run: "./scripts/download_terraform.sh $TERRAFORM_VERSION"
     - name: Check format
       run: "~/tfbin/terraform fmt -write=false -diff=true -check"
+    - name: Check tfsec
+      run: go install github.com/aquasecurity/tfsec/cmd/tfsec@latest && tfsec --concise-output
     - name: Post to hook-exporter
       run: "./.github/exporter.sh"
       env:
