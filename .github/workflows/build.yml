@@ -26,8 +26,12 @@ jobs:
       run: "./scripts/download_terraform.sh $TERRAFORM_VERSION"
     - name: Check format
       run: "~/tfbin/terraform fmt -write=false -diff=true -check"
-    - name: Check tfsec
-      run: go install github.com/aquasecurity/tfsec/cmd/tfsec@latest && tfsec --concise-output
+    - name: Run Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'config'
+        hide-progress: false
+        exit-code: '1'
     - name: Post to hook-exporter
       run: "./.github/exporter.sh"
       env:
