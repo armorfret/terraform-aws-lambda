@@ -1,13 +1,19 @@
 variable "runtime" {
   description = "Language to use for Lambda"
   type        = string
-  default     = "go1.x"
+  default     = "provided.al2"
+}
+
+variable "architecture" {
+  description = "Architecture for lambda"
+  type        = string
+  default     = "arm64"
 }
 
 variable "handler" {
   description = "Program entrypoint for Lambda"
   type        = string
-  default     = "main"
+  default     = "bootstrap"
 }
 
 variable "timeout" {
