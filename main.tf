@@ -42,6 +42,11 @@ resource "aws_lambda_function" "this" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "this" {
+  name              = "/aws/lambda/${var.function_name}"
+  retention_in_days = var.cloudwatch_retention_in_days
+}
+
 resource "aws_lambda_permission" "allow_source" {
   function_name = aws_lambda_function.this.function_name
   statement_id  = "AllowExecutionFrom${title(var.source_types[count.index])}"
@@ -61,4 +66,3 @@ resource "aws_iam_role" "lambda" {
   name               = var.function_name
   assume_role_policy = data.aws_iam_policy_document.trust.json
 }
-

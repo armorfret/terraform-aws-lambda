@@ -65,3 +65,8 @@ variable "source_arns" {
   type        = list(string)
 }
 
+variable "cloudwatch_retention_in_days" {
+  description = "Days to retain cloudwatch logs"
+  type        = number
+  default     = 0
+}
