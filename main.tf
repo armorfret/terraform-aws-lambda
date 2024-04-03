@@ -45,6 +45,8 @@ resource "aws_lambda_function" "this" {
 resource "aws_cloudwatch_log_group" "this" {
   name              = "/aws/lambda/${var.function_name}"
   retention_in_days = var.cloudwatch_retention_in_days
+
+  kms_key_id = var.kms_key_arn == "" ? null : var.kms_key_arn
 }
 
 resource "aws_lambda_permission" "allow_source" {

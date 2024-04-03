@@ -70,3 +70,9 @@ variable "cloudwatch_retention_in_days" {
   type        = number
   default     = 0
 }
+
+variable "kms_key_arn" {
+  description = "Use custom KMS key for Cloudwatch logs"
+  type        = string
+  default     = ""
+}
