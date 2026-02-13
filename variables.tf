@@ -1,7 +1,7 @@
 variable "runtime" {
   description = "Language to use for Lambda"
   type        = string
-  default     = "provided.al2"
+  default     = "provided.al2023"
 }
 
 variable "architecture" {
